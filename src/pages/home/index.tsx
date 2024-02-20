@@ -5,6 +5,7 @@ import * as C from './styles'
 import Image from 'next/image'
 
 import previewImage from '../../assets/app-preview.png'
+
 import { ClaimUsernameForm } from './components/ClaimUsernameForm'
 
 export default function Home() {
