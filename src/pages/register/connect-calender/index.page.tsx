@@ -6,6 +6,8 @@ import * as CMain from './styles'
 
 import { Button, Heading, MultiStep, Text } from '@ignite-ui/react'
 
+import { signIn } from 'next-auth/react'
+
 export default function Register() {
   // const handleRegister = async (data: RegisterFormData) => {
   // }
@@ -25,7 +27,11 @@ export default function Register() {
       <CMain.ConnectBox>
         <CMain.ConnectItem>
           <Text>Google Calendar</Text>
-          <Button variant="secondary" size="sm">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => signIn('google')}
+          >
             Conectar
             <ArrowRight />
           </Button>
