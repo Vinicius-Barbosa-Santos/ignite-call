@@ -10,7 +10,43 @@ import {
   TextInput,
 } from '@ignite-ui/react'
 
+import { useFieldArray, useForm } from 'react-hook-form'
+
+import * as z from 'zod'
+
+import { getWeekDays } from '@/utils/get-week-days'
+
+const timeIntervalsFormSchema = z.object({})
+
 export default function TimeIntervals() {
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
+    defaultValues: {
+      intervals: [
+        { weekDay: 0, enabled: false, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 1, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 2, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 3, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 4, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 5, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 6, enabled: false, startTime: '08:00', endTime: '18:00' },
+      ],
+    },
+  })
+
+  const weekDays = getWeekDays()
+
+  const { fields } = useFieldArray({
+    control,
+    name: 'intervals',
+  })
+
+  async function handleSetTimeIntervals() {}
+
   return (
     <C.Container>
       <C.Header>
@@ -20,32 +56,28 @@ export default function TimeIntervals() {
           semana.
         </Text>
 
-        <MultiStep size={4} currentStep={2} />
+        <MultiStep size={4} currentStep={3} />
       </C.Header>
 
-      <CMain.IntervalBox as="form">
+      <CMain.IntervalBox
+        as="form"
+        onSubmit={handleSubmit(handleSetTimeIntervals)}
+      >
         <CMain.IntervalsContainer>
-          <CMain.IntervalsItem>
-            <CMain.IntervalsDay>
-              <Checkbox />
-              <Text>Segunda-Feira</Text>
-            </CMain.IntervalsDay>
-            <CMain.IntervalsInputs>
-              <TextInput size={'sm'} type={'time'} step={60} />
-              <TextInput size={'sm'} type={'time'} step={60} />
-            </CMain.IntervalsInputs>
-          </CMain.IntervalsItem>
-
-          <CMain.IntervalsItem>
-            <CMain.IntervalsDay>
-              <Checkbox />
-              <Text>Terça-Feira</Text>
-            </CMain.IntervalsDay>
-            <CMain.IntervalsInputs>
-              <TextInput size={'sm'} type={'time'} step={60} />
-              <TextInput size={'sm'} type={'time'} step={60} />
-            </CMain.IntervalsInputs>
-          </CMain.IntervalsItem>
+          {fields.map((field, index) => {
+            return (
+              <CMain.IntervalsItem key={field.id}>
+                <CMain.IntervalsDay>
+                  <Checkbox />
+                  <Text>{weekDays[field.weekDay]}</Text>
+                </CMain.IntervalsDay>
+                <CMain.IntervalsInputs>
+                  <TextInput size={'sm'} type={'time'} step={60} {...register(`intervals.${index}.startTime`)} />
+                  <TextInput size={'sm'} type={'time'} step={60} {...register(`intervals.${index}.endTime`)} />
+                </CMain.IntervalsInputs>
+              </CMain.IntervalsItem>
+            )
+          })}
         </CMain.IntervalsContainer>
 
         <Button type="submit">
