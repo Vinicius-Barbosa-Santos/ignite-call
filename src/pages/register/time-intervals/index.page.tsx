@@ -58,6 +58,8 @@ export default function TimeIntervals() {
     },
   })
 
+  console.log(errors.intervals?.root?.message)
+
   const weekDays = getWeekDays()
 
   const { fields } = useFieldArray({
@@ -129,9 +131,9 @@ export default function TimeIntervals() {
           })}
         </CMain.IntervalsContainer>
 
-        {errors.intervals?.message && (
+        {errors.intervals?.root?.message && (
           <CMain.FormError size="sm">
-            {errors.intervals.message}
+            {errors.intervals.root?.message}
           </CMain.FormError>
         )}
 
