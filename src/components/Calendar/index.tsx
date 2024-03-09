@@ -37,12 +37,34 @@ export function Calendar() {
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
             <td>
               <C.CalendarDay>1</C.CalendarDay>
             </td>
             <td>
-              <C.CalendarDay>2</C.CalendarDay>
+              <C.CalendarDay disabled>2</C.CalendarDay>
+            </td>
+            <td>
+              <C.CalendarDay>3</C.CalendarDay>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <C.CalendarDay>1</C.CalendarDay>
+            </td>
+            <td>
+              <C.CalendarDay>1</C.CalendarDay>
+            </td>
+            <td>
+              <C.CalendarDay>1</C.CalendarDay>
+            </td>
+            <td>
+              <C.CalendarDay>1</C.CalendarDay>
+            </td>
+            <td>
+              <C.CalendarDay>1</C.CalendarDay>
+            </td>
+            <td>
+              <C.CalendarDay disabled>2</C.CalendarDay>
             </td>
             <td>
               <C.CalendarDay>3</C.CalendarDay>
