@@ -1,28 +1,56 @@
+import dayjs from 'dayjs'
 import { CaretLeft, CaretRight } from 'phosphor-react'
-import * as C from './styles'
-import { getWeekDays } from '@/utils/get-week-days'
+import { useState } from 'react'
+import { getWeekDays } from '../../utils/get-week-days'
+import {
+  CalendarActions,
+  CalendarBody,
+  CalendarContainer,
+  CalendarDay,
+  CalendarHeader,
+  CalendarTitle,
+} from './styles'
 
 export function Calendar() {
+  const [currentDate, setCurrentDate] = useState(() => {
+    return dayjs().set('date', 1)
+  })
+
+  function handlePreviousMonth() {
+    const previousMonth = currentDate.subtract(1, 'month')
+
+    setCurrentDate(previousMonth)
+  }
+
+  function handleNextMonth() {
+    const nextMonth = currentDate.add(1, 'month')
+
+    setCurrentDate(nextMonth)
+  }
+
   const shortWeekDays = getWeekDays({ short: true })
 
-  return (
-    <C.CalendarContainer>
-      <C.CalendarHeader>
-        <C.CalendarTitle>
-          Dezembro <span>2022</span>
-        </C.CalendarTitle>
+  const currentMonth = currentDate.format('MMMM')
+  const currentYear = currentDate.format('YYYY')
 
-        <C.CalendarActions>
-          <button>
+  return (
+    <CalendarContainer>
+      <CalendarHeader>
+        <CalendarTitle>
+          {currentMonth} <span>{currentYear}</span>
+        </CalendarTitle>
+
+        <CalendarActions>
+          <button onClick={handlePreviousMonth} title="Previous month">
             <CaretLeft />
           </button>
-          <button>
+          <button onClick={handleNextMonth} title="Next month">
             <CaretRight />
           </button>
-        </C.CalendarActions>
-      </C.CalendarHeader>
+        </CalendarActions>
+      </CalendarHeader>
 
-      <C.CalendarBody>
+      <CalendarBody>
         <thead>
           <tr>
             {shortWeekDays.map((weekDay) => (
@@ -30,7 +58,6 @@ export function Calendar() {
             ))}
           </tr>
         </thead>
-
         <tbody>
           <tr>
             <td></td>
@@ -38,40 +65,40 @@ export function Calendar() {
             <td></td>
             <td></td>
             <td>
-              <C.CalendarDay>1</C.CalendarDay>
+              <CalendarDay>1</CalendarDay>
             </td>
             <td>
-              <C.CalendarDay disabled>2</C.CalendarDay>
+              <CalendarDay disabled>2</CalendarDay>
             </td>
             <td>
-              <C.CalendarDay>3</C.CalendarDay>
+              <CalendarDay>3</CalendarDay>
             </td>
           </tr>
           <tr>
             <td>
-              <C.CalendarDay>1</C.CalendarDay>
+              <CalendarDay>1</CalendarDay>
             </td>
             <td>
-              <C.CalendarDay>1</C.CalendarDay>
+              <CalendarDay>1</CalendarDay>
             </td>
             <td>
-              <C.CalendarDay>1</C.CalendarDay>
+              <CalendarDay>1</CalendarDay>
             </td>
             <td>
-              <C.CalendarDay>1</C.CalendarDay>
+              <CalendarDay>1</CalendarDay>
             </td>
             <td>
-              <C.CalendarDay>1</C.CalendarDay>
+              <CalendarDay>1</CalendarDay>
             </td>
             <td>
-              <C.CalendarDay disabled>2</C.CalendarDay>
+              <CalendarDay disabled>2</CalendarDay>
             </td>
             <td>
-              <C.CalendarDay>3</C.CalendarDay>
+              <CalendarDay>3</CalendarDay>
             </td>
           </tr>
         </tbody>
-      </C.CalendarBody>
-    </C.CalendarContainer>
+      </CalendarBody>
+    </CalendarContainer>
   )
 }
